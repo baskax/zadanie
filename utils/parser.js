@@ -40,10 +40,10 @@ export default class Parser {
   * @brief function parsing request object and depends on its content running corresponding actions, 
   *
   *   4 cases:
-  *   only /products;
-  *   /products + params ie. /products?q=Nikon&order=price[desc]
-  *   /products/category ie. /products/camera
-  *   /products/category + params ie. /products/camera?q=Canon&order=[rating=desc,price=asc]
+  *   only /api/products;
+  *   /products + params ie. /api/products?filters=price_max=20000,price_min=2000&order=brand=asc,price=desc&q=janusz&page=1&recs=20
+  *   /products/category ie. /api/products/camera
+  *   /products/category + params ie. /api/products/camera?q=Canon&order=[rating=desc,price=asc]
   *
   * @param req - request object
   * @param res - response object
