@@ -5,7 +5,7 @@ export default class Parser {
   */
   constructor(client) {
     this.client = client;
-    this.debug = true;
+    this.debug = false;
   }
 
 
