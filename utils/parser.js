@@ -28,7 +28,6 @@ export default class Parser {
   * @param res - response object
   */
   parse(req,res) {
-    var self = this;
     var path = req.path;
     var splitted = path.split("/");
     if (splitted[1] === "products") { // /products
@@ -51,7 +50,6 @@ export default class Parser {
   * @param res - response object
   */
   getAll(res) {
-    var self = this;
     var query = this.getBaseQuery();
     query.body.query.match_all = {};
     this.executeSearchQuery(res,query);
