@@ -3,9 +3,9 @@
     "product": { 
       "_all":       { "enabled": true }, 
         "properties": {
-          "category": { "type": "text" }, 
-          "brand" : { "type":"text" },
-          "model": { "type":"text" },
+          "category": { "type": "keyword" }, 
+          "brand" : { "type":"keyword" },
+          "model": { "type":"keyword" },
           "description":  { "type": "text" },
           "price":  { "type": "float" },
           "created":  { "type": "date" },

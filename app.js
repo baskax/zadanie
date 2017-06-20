@@ -17,26 +17,11 @@ var cors = (req, res, next) => {
 
 app.use(cors);
 
-/*
-var filters,page,recs,query,sort;
-
-var search = (req,res,next) => {
-    filters = req.query.filters;
-    sort = req.query.sort;
-    recs = req.query.recs;
-    query = req.query.q;
-    page = req.query.page;
-    next(); 
-}
-
-app.use(search);
-*/
-
 app.get('/', (req,res) => {
     res.send('Working!');
     });
 
-app.get('/*',(req,res) => {
+app.get('/api/*',(req,res) => {
     parser.parse(req,res);
     });
 
