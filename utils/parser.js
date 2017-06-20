@@ -100,10 +100,8 @@ export default class Parser {
             response.push(parsed);
           }
         res.status(200).json(response);
-        res.end();
       } else {
         res.status(404).json("nothing found");
-        res.send();
       }
   }
 }
