@@ -1,0 +1,17 @@
+{
+  "name": "zadanie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "babel-node app.js --presets es2015",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabian",
+  "license": "ISC",
+  "dependencies": {
+    "elasticsearch": "^13.1.1",
+    "express": "^4.15.3",
+    "grunt": "^1.0.1"
+  }
+}
