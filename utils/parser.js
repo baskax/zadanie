@@ -11,18 +11,36 @@ export default class Parser {
   /**
   * @brief function returns base query used in all elasticsearch queries, contains index, type and body to simplify further work
   */
-  getBaseQuery() {
-    return {
+  getBaseQuery(bool = null) {    
+    var query = {
       index: 'catalog',
       type: 'product',
       body: {
         query: {}
       }
     };
+    if(bool!==null) {
+      var query = {
+        index: 'catalog',
+        type: 'product',
+        body: {
+          query: {
+            bool: {}
+            }
+          }
+      };
+    }
+    return query;
   }
 
   /**
-  * @brief function parsing request object and depends on its content running corresponding actions
+  * @brief function parsing request object and depends on its content running corresponding actions, 
+  *
+  *   4 cases:
+  *   only /products;
+  *   /products + params ie. /products?q=Nikon&order=price[desc]
+  *   /products/category ie. /products/camera
+  *   /products/category + params ie. /products/camera?q=Canon&order=[rating=desc,price=asc]
   *
   * @param req - request object
   * @param res - response object
@@ -31,11 +49,16 @@ export default class Parser {
     var path = req.path;
     var splitted = path.split("/");
     if (splitted[1] === "products") { // /products
-      if (splitted.length === 2) {    //nothing behind /products
+      if (splitted.length === 2 && Object.keys(req.query).length === 0) {    //nothing behind /products
         this.getAll(res);
+      } else if (splitted.length === 2 && Object.keys(req.query).length > 0) {  // /products + query params in GET
+        this.processQueriedRequest(req,res);
       } else if(splitted.length === 3 && Object.keys(req.query).length === 0) { // /products/category - no other queries in GET
         var category = splitted[2];
         this.getAllFromCategory(res,category);
+      } else if(splitted.length === 3 && Object.keys(req.query).length > 0) {   ///products/category + query params in GET
+        var category = splitted[2];
+        this.processQueriedRequest(req,res,category);
       } else {
       res.status(401).json(req.query);
       }
@@ -65,6 +88,33 @@ export default class Parser {
     var query = this.getBaseQuery();
     query.body.query.bool = {must:{match:{"category":category}}};
     this.executeSearchQuery(res,query);
+  }
+
+  /**
+  * @brief function process queried request (query params in GET)
+  *
+  * @param req - request object
+  * @param res - response object
+  * @param category - category to search for, default null
+  */
+  processQueriedRequest(req,res,category = null) {
+  var query = this.getBaseQuery(true);
+  var legalParams = ["q","order","page","recs"];
+  var queryParams = Object.keys(req.query);
+  console.log(queryParams);
+
+
+  //category
+  if (category !== null) {
+    query.body.query.bool.must = {match:{category:category}};    
+  }
+
+  //free search
+  if (req.query.q !== undefined && req.query.q !== "") {
+    query.body.query.bool.filter = {match:{_all:req.query.q}};
+  }
+
+  this.executeSearchQuery(res,query);
   }
 
   /**

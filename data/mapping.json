@@ -1,24 +1,24 @@
 {
   "mappings": {
     "product": { 
-      "_all":       { "enabled": false  }, 
+      "_all":       { "enabled": true }, 
         "properties": {
-          "category": { "type": "text"}, 
-          "brand" : {"type":"text"},
-          "model": {"type":"text"},
-          "description":  { "type": "text"},
+          "category": { "type": "text" }, 
+          "brand" : { "type":"text" },
+          "model": { "type":"text" },
+          "description":  { "type": "text" },
           "price":  { "type": "float" },
-          "created":  { "type":   "date" },
+          "created":  { "type": "date" },
           "review": { 
             "type" : "nested",
             "properties" : {
               "author" : { "type" : "keyword" },
-              "rating" : {"type":"byte"},
-              "comment" : {"type":"text"}
+              "rating" : { "type":"byte" },
+              "comment" : { "type":"text" }
             }
           },
-          "image": { "type":"text"},
-          "more_info" : {"type":"object"}
+          "image": { "type":"text", "include_in_all" : false },
+          "more_info" : { "type":"object" }
         }
     }
   }
