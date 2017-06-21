@@ -9,7 +9,7 @@ var parser = new Elastic(client);
 const port = 8110;
 
 var cors = (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://fbla.pl:3001');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
