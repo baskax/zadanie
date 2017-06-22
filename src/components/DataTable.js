@@ -42,25 +42,29 @@ export default class DataTable extends React.Component {
 
     handleFilters(filtersInput) {
         this.setState({filters: filtersInput});
+        this.getData();
     }
 
     handlePagination(paginationInput) {
-      this.setState({page: paginationInput});
-      this.getData();
+        this.setState({page: paginationInput});
+        this.getData();
     }
     
     handleRecsPerPage(records) {
-      this.setState({recs: records});
-      this.getData();
+        this.setState({recs: records});
+        this.getData();
     }    
 
 
     getData() {
         var self = this;
+        var filters = this.state.filters;
+        var filterQuery = "brand="+filters.brand+",model="+filters.model+",category="+filters.category+",price_min="+filters.price_min+",price_max="+filters.price_max;
         axios.get(this.apiBase, {
           params: {
             page: self.state.page,
-            recs: self.state.recs
+            recs: self.state.recs,
+            filters: filterQuery
           }
         }).then((res) => {
             self.setState({products: res.data.data, count:res.data.count})

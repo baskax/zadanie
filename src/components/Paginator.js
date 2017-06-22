@@ -22,8 +22,8 @@ export default class Paginator extends React.Component {
             <div className="pagination-box">
                 <Pagination prev next items={this.props.pages} activePage={this.props.activepage} onSelect={this.handlePageChange} />
                 <div className="pull-right">
-                  <FormControl componentClass="select" onChange={this.handleRecsChange} >
-                    <option selected value="5">5</option>
+                  <FormControl componentClass="select" onChange={this.handleRecsChange} defaultValue={5} >
+                    <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
                   </FormControl>

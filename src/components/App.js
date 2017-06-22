@@ -11,7 +11,6 @@ class App extends Component {
             <div className="App">
                 <h1>Katalog</h1>
                 <DataTable/>
-
             </div>
         );
     }
