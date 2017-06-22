@@ -20,6 +20,10 @@
     width: 20%;
 }
 
+.pagination-box {
+    display: block;
+    margin: 0 auto;
+}
 
 th > a {
     float: right !important;

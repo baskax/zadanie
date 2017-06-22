@@ -230,7 +230,8 @@ export default class Parser {
     var self = this;
     this.client.search(query).then(function(resp) {
       var hits = resp.hits.hits;
-      self.dataFilter(res,hits);
+      var count = resp.hits.total;
+      self.dataFilter(res,hits,count);
     }, function(err) {
       res.status(500).json(err);
     });
@@ -242,14 +243,15 @@ export default class Parser {
   * @param res - response object
   * @param data - data got from elasticsearch 
   */
-  dataFilter(res,data) {
+  dataFilter(res,data,count) {
       if(data.length > 0) {
-        var response = [];
+        var responsedata = [];
           for (var i = 0, len = data.length; i < len; i++) {
             var parsed = data[i]._source;
             parsed.id = data[i]._id;
-            response.push(parsed);
+            responsedata.push(parsed);
           }
+        var response = {data: responsedata, count: count};
         res.status(200).json(response);
       } else {
         res.status(404).json("nothing found");

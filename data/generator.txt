@@ -1,0 +1,23 @@
+To use on http://www.json-generator.com/
+
+
+  {
+    category: '{{random("laptop","camera","tv")}}',
+    brand: '{{random("ASUS","HP","Lenovo","Dell","Canon","Kox","Nikon","Panasonic","Samsung","Intel","Nokia","Sony","Huawei","Mercedes")}}',
+    model: '{{random("Miix 510","R15","XH-463","YETI","GT7364","MX88","Ultra","HH765","GD-867","XT-998","Power666","Titan","X-100","MP-900","HS-222","Z50-D-BTO","A30-D1300ED","X20W-D1200","EDX20W-D1252","X20W-D1254","X20W-D1256","X20W-D-BTO","Z30-001011","z30-bsmbnx3","z30-bsmbnx4","z30-bst3nx3","Z30-C1310","Z30-C1320","Z30-C-BTO","Z30-C1301","1000","1100","1200","1500","X666")}}',
+    price: '{{floating(800, 5000, 2, "00.00")}}',
+    created: '{{date(new Date(2012, 0, 1), new Date(), "YYYY-MM-dd")}}',
+    description: '{{lorem(1)}}',
+    review: [
+      '{{repeat(0,10)}}',
+      {
+        author: '{{firstName()}}',
+        rating: '{{integer(1,5)}}',
+        comment: '{{random("super","słabo","nawet dobry","drogi","mogło być lepiej","wszystko super","najlepszy!","spoko","spodziewałem się więcej","szkoda gadać","nie podoba mi się")}}'
+      }
+    ],
+    more_info: {
+      display_size: '{{floating(10,20,1,"00.0")}}'
+    }
+  }
+

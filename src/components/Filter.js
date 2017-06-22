@@ -2,9 +2,6 @@ import React from 'react';
 import {FormControl, ControlLabel, FormGroup, Button, ButtonGroup} from 'react-bootstrap';
 
 export default class Filter extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
