@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Table} from 'react-bootstrap';
+import {Table, Alert, Button} from 'react-bootstrap';
 import Modal from "./Modal";
 import Paginator from "./Paginator";
 import Filter from "./Filter";
@@ -12,13 +12,14 @@ export default class DataTable extends React.Component {
         super(props);
         this.apiBase = 'http://fbla.pl:8110/api/products';
         this.state = {
-          products: [],
-          count: '',
-          searchText: '',
-          filters: [],
-          page: 1,
-          recs: 5,
-          errorMsg: ''
+            products: [],
+            count: '',
+            searchText: '',
+            filters: [],
+            page: 1,
+            recs: 5,
+            errorMsg: '',
+            noConnection: false    
         };
 
         this.handleSearch = this.handleSearch.bind(this);
@@ -35,8 +36,7 @@ export default class DataTable extends React.Component {
         }).then((res) => {
             self.setState({products: res.data.data, count: res.data.count})
         }).catch((err) => {
-            self.setState({errorMsg: err.response.data});
-            self.refs.modal.handleClick();
+            self.errorHandler(err)
         });
     }
 
@@ -54,23 +54,31 @@ export default class DataTable extends React.Component {
         this.setState({recs: records});
         this.getData();
     }    
-
+    
+    errorHandler = (err) => {
+        var error = err.response ? err.response.data : true;
+        if (error === true) {
+            this.setState({noConnection: true});
+        } else {
+            this.setState({errorMsg: error});
+            this.refs.modal.handleClick();
+        }
+    }
 
     getData() {
         var self = this;
-        var filters = this.state.filters;
-        var filterQuery = "brand="+filters.brand+",model="+filters.model+",category="+filters.category+",price_min="+filters.price_min+",price_max="+filters.price_max;
+//        var filters = this.state.filters;
+//        var filterQuery = "brand="+filters.brand+",model="+filters.model+",category="+filters.category+",price_min="+filters.price_min+",price_max="+filters.price_max;
         axios.get(this.apiBase, {
           params: {
             page: self.state.page,
             recs: self.state.recs,
-            filters: filterQuery
+           // filters: filterQuery
           }
         }).then((res) => {
             self.setState({products: res.data.data, count:res.data.count})
         }).catch((err) => {
-            self.setState({errorMsg: err.response.data});
-            self.refs.modal.handleClick();
+            self.errorHandler(err)
         });
     }    
     
@@ -81,8 +89,7 @@ export default class DataTable extends React.Component {
         }}).then((response) => {
             self.setState({products: response.data.data, count: response.data.count})
         }).catch((err) => {
-            self.setState({errorMsg: err.response.data});
-            self.refs.modal.handleClick();
+            self.errorHandler(err)
         });
     }
 
@@ -94,13 +101,13 @@ export default class DataTable extends React.Component {
         }).then((res) => {
             self.setState({products: res.data.data, count: res.data.count})
         }).catch((err) => {
-            self.setState({errorMsg: err.response.data});
-            self.refs.modal.handleClick();
+            self.errorHandler(err)
         });
     }
 
     render() {
-        return (
+        const connected = this.state.noConnection;
+        if (connected === false) return (
             <div className="data-table">
                 <Search searchText={this.state.searchText} onSearchInput={this.handleSearch} />
                 <Filter filtersValue={this.state.filters} onFiltersSubmit={this.handleFilters} />
@@ -147,7 +154,33 @@ export default class DataTable extends React.Component {
                 </div>
             </div>
         );
+        else { 
+            const divStyle = {
+                width: '800px',
+                height: '300px',
+                margin: 'auto',
+                position: 'absolute',
+                top: '0',
+                bottom: '0',
+                left: '0',
+                right: '0'
+            };
+            return(
+            <div style={divStyle}>
+                <Alert bsStyle="danger">
+                <h4>Oh snap! There is an error!</h4>
+                <p>Probably there is no connection with backend server, try to refresh the page by clicking the button below.</p>
+                <p>
+                <Button bsSize="medium" bsStyle="primary" onClick={this.handleRefresh}>Refresh</Button>
+                </p>
+               </Alert>
+            </div>
+        );
+        }
     }
 
-
+    handleRefresh = () => {
+        window.location.reload(true);
+    }
+    
 }
