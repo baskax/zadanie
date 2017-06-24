@@ -55,3 +55,11 @@ th > a {
     left: 0;
     right: 0;
 }
+
+.product-page {
+}
+
+.reviews-box {
+    float: left;
+    width: 25%;
+}

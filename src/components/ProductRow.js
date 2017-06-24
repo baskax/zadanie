@@ -14,7 +14,7 @@ export default class ProductRow extends React.Component {
             rating = "brak ocen";
         }
         return (
-            <tr key={this.props.id}>
+            <tr key={this.props.id} onClick={() => {window.location.href = "/product/" + this.props.id}}>
                 <td>{this.props.brand}</td>
                 <td>{this.props.model}</td>
                 <td>{this.props.price}</td>
