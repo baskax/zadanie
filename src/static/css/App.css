@@ -44,3 +44,14 @@ th > a {
     display: inline-block;
     padding: 20px;
 }
+
+.connection-alert {
+    width: 800px;
+    height: 300px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

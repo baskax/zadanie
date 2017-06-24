@@ -2,13 +2,14 @@ import React from 'react';
 import Review from './Review';
 
 export default class Reviews extends React.Component {
-    constructor = (props) => {
+    constructor(props) {
         super(props)
     }
 
-    render = () => {
-        return(
+    render() {
+        return (
             <div className="reviews-box">
             </div>
         )
     }
+}

@@ -2,11 +2,11 @@ import React from 'react';
 import Reviews from './Reviews';
 
 export default class Product extends React.Component {
-    constructor = (props) => {
+    constructor(props) {
         super(props);
     }
 
-    render = () => {
+    render() {
         return(
             <div className="product-page">
             <Reviews/>

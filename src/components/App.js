@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../static/css/App.css';
-import DataTable from './DataTable';
+import Browser from './Browser';
 
 
 class App extends Component {
@@ -10,7 +10,7 @@ class App extends Component {
         return (
             <div className="App">
                 <h1>Katalog</h1>
-                <DataTable/>
+                <Browser/>
             </div>
         );
     }

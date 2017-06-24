@@ -9,7 +9,7 @@ class Modal extends React.Component {
     handleClose = () => this.setState({isShowingModal: false})
 
     render() {
-        return <div onClick={this.handleClick}>
+        return <div>
             {
                 this.state.isShowingModal &&
                 <ModalContainer onClose={this.handleClose}>

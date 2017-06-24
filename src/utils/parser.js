@@ -5,7 +5,7 @@ export default class Parser {
   */
   constructor(client) {
     this.client = client;
-    this.debug = false;
+    this.debug = true;
   }
 
 
@@ -194,7 +194,7 @@ export default class Parser {
         query.body.query.bool.filter.push({ range :{ price : { lte : filterValue }}});
         continue;
       }
-      query.body.query.bool.filter.push({ term :{ [filterField] : filterValue } });
+      query.body.query.bool.filter.push({ match :{ [filterField] : filterValue } });
     }
     if (filterFail === true) {
       res.status(400).json("Bad request, illegal filter name");
