@@ -26,8 +26,13 @@ export default class Product extends React.Component {
     render() {
         return (
             <div className="product-page">
-                <Link to="/">Back</Link>
+                <Link to="/">Back</Link><br/>
                 <Reviews reviews={this.state.product.review}/>
+                Marka:<h1>{this.state.product.brand}</h1><br/>
+                Model:<h2>{this.state.product.model}</h2><br/>
+                Cena:<h2>{this.state.product.price}</h2><br/>
+                Dodano:<h4>{this.state.product.created}</h4><br/>
+                Kategoria:<h4>{this.state.product.category}</h4><br/>
             </div>
         );
     }

@@ -72,7 +72,7 @@ export default class Parser {
                 type: 'product',
                 id: id
             }, function (err, response) {
-                if (response.found == true)
+                if (response.found === true)
                 res.status(200).json(response._source);
                 else res.status(404).json("Nothing found");
             });
@@ -197,11 +197,11 @@ export default class Parser {
                     break;
                 }
                 var filterValue = filter[1];
-                if (filterField == 'price_min') {
+                if (filterField === 'price_min') {
                     query.body.query.bool.filter.push({range: {price: {gte: filterValue}}});
                     continue;
                 }
-                if (filterField == 'price_max') {
+                if (filterField === 'price_max') {
                     query.body.query.bool.filter.push({range: {price: {lte: filterValue}}});
                     continue;
                 }

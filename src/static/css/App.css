@@ -56,10 +56,12 @@ th > a {
     right: 0;
 }
 
-.product-page {
+.product-page h1,h2,h3,h4 {
+    display: inline;
 }
 
 .reviews-box {
-    float: left;
+    float: right;
     width: 25%;
+    border: 1px solid black;
 }
