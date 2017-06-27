@@ -3,13 +3,13 @@ import axios from 'axios';
 import {Alert, Button} from 'react-bootstrap';
 import DataTable from './DataTable';
 import Modal from "./Modal";
-
+import queryString from "query-string";
 
 export default class Browser extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiBase = 'http://localhost:8110/api/products';
+        this.apiBase = 'http://fbla.pl:8110/api/products';
         this.state = {
             data: {data: [], count: 0},
             searchText: '',
@@ -25,6 +25,13 @@ export default class Browser extends React.Component {
         this.handleSort = this.handleSort.bind(this);
         this.handlePagination = this.handlePagination.bind(this);
         this.handleRecsPerPage = this.handleRecsPerPage.bind(this);
+    }
+
+    componentWillMount() {
+        let params = queryString.parse(window.location.search);
+        if (params.page !== undefined) this.setState({page: params.page});
+        if (params.recs !== undefined) this.setState({recs: params.recs});
+        
     }
 
     handleSearch(searchInput) {

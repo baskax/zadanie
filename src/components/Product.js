@@ -7,7 +7,7 @@ export default class Product extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiBase = "http://localhost:8110/api/";
+        this.apiBase = "http://fbla.pl:8110/api/";
         this.productID = parseInt(props.match.params.id, 10);
         this.state = {
             product: {}
