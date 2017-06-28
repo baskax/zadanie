@@ -7,6 +7,8 @@ import ProductRow from "./ProductRow";
 export default class ProductTable extends React.Component {
 
     render() {
+        let show = (this.props.data.count > 0) ? true : false;
+        if (show === true)
         return (
             <div className="data-list">
                 <Table bordered>
@@ -30,6 +32,25 @@ export default class ProductTable extends React.Component {
                     activepage={this.props.pagination.values.page} onPageChange={this.props.pagination.handlers.page}
                     onRecsChange={this.props.pagination.handlers.recs}/>
             </div>
+        );
+        else 
+        return (
+            <div className="data-list">
+                <Table bordered>
+                    <thead>
+                    <tr>
+                        <TableHeader name="Marka" sort sortField="brand" onSort={this.props.sort}/>
+                        <TableHeader name="Model" sort sortField="model" onSort={this.props.sort}/>
+                        <TableHeader name="Cena" sort sortField="price" onSort={this.props.sort}/>
+                        <TableHeader name="Kategoria" sort sortField="category" onSort={this.props.sort}/>
+                        <TableHeader name="Ocena"/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    Nothing found
+                    </tbody>
+                </Table>
+            </div> 
         );
     }
 }

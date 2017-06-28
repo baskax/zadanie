@@ -29,9 +29,27 @@ export default class Browser extends React.Component {
 
     componentWillMount() {
         let params = queryString.parse(window.location.search);
-        if (params.page !== undefined) this.setState({page: params.page});
-        if (params.recs !== undefined) this.setState({recs: params.recs});
-        
+        let newState = {};
+        if (params.page !== undefined) newState.page = params.page;
+        if (params.recs !== undefined) newState.recs = params.recs;
+        if (params.filters !== undefined) {
+             let filtersQuery = params.filters;
+             let filters = filtersQuery.split(",");
+             newState.filters = [];
+             for (let i = 0; i < filters.length; i++) {                
+                let filter = filters[i].split("=");
+                newState.filters[filter[0]] = filter[1];
+             }
+        }
+        if (params.order !== undefined) {
+             let orderQuery = params.order;
+             let order = orderQuery.split(",");
+             let orderField = order[0].split("=");
+             newState.sort = {};
+             newState.sort.field = orderField[0];
+             newState.sort.dir = orderField[1];
+        }
+        if (Object.keys(newState).length !== 0) this.setState(newState);
     }
 
     handleSearch(searchInput) {
@@ -59,7 +77,8 @@ export default class Browser extends React.Component {
         if (error === true) {
             this.setState({noConnection: true});
         } else {
-            this.setState({errorMsg: error},this.refs.modal.handleClick);
+            if (err.response.status !== 404) this.setState({errorMsg: error},this.refs.modal.handleClick);
+            else this.setState({data: {data: [], count: 0}});
         }
     }
 
