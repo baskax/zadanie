@@ -1,82 +1,63 @@
 import React from 'react';
-import { FormControl } from 'react-bootstrap';
-import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
+import config from '../utils/config';
+import { FormControl } from 'react-bootstrap';
 
 export default class Search extends React.Component {
 
     constructor(props) {
       super(props);
-      this.apiBase = 'http://localhost:8110/api/product';
+      this.apiBase = config.api + "/products";
       this.state={
             value: '',
             suggestions: []
         };
       this.handleSearch = this.handleSearch.bind(this);
-    } 
+    }
+ 
+    getInitialState() {
+        return {
+            value: ''
+        };
+    }
 
     handleSearch(e) {
       this.props.onSearchInput(e.target.value);
     } 
-    
-    onChange = (event, { newValue, method }) => {
-        this.setState({
-          value: newValue
-        });
-      };
 
-
-    getSuggestionValue(suggestion) {
-      return suggestion.brand + " " + suggestion.model;
-    }
-
-    renderSuggestion(suggestion) {
-      return (
-        <span>{suggestion.brand} - {suggestion.model}</span>
-      );
-    }
-
-    getSuggestions = (value) => {
+    getSuggestions(value) {
         var self = this;
          axios.get(this.apiBase,{params: {q:value}}).then((res) => {
             self.setState({suggestions: res.data})
         }).catch((err) => {
             if (err.response !== undefined && err.response.status === 404) void(0);
-            else console.log(err);
         });
     }
-  
-    onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-          suggestions: this.getSuggestions(value)
-        });
-    };
-
-    onSuggestionsClearRequested = () => {
-        this.setState({
-          suggestions: []
-        });
-    };
-    
+ 
+    onChange = (e) => {
+        this.setState({value: e.target.value},this.getSuggestions(e.target.value));
+    }
+ 
     render() {
-        const { value, suggestions } = this.state;
-
         const inputProps = {
           placeholder: 'Type something',
-          value,
           onChange: this.onChange
         };
+        console.log(this.state.suggestions.length);        
+        const suggestionsItems = this.state.suggestions.length == 0 ? "" : this.state.suggestions.map((suggestion) => 
+            <span onClick={this.onClick} id={suggestion.id}>{suggestion.brand} - {suggestion.model}</span>
+        );
 
 
         return(
             <div className="search-input">
-                <Autosuggest 
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-//                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={this.getSuggestionValue}
-                    renderSuggestion={this.renderSuggestion}
-                    inputProps={inputProps} />
+            <FormControl
+            type="text"
+            value={this.state.value}
+            placeholder={inputProps.placeholder}
+            onChange={inputProps.onChange}
+            />
+            <div className="suggestions-list">{suggestionsItems}</div>
             </div>
         );
     }

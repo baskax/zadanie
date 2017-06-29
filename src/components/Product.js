@@ -2,12 +2,13 @@ import React from 'react';
 import Reviews from './Reviews';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import config from "../utils/config";
 
 export default class Product extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiBase = "http://fbla.pl:8110/api/";
+        this.apiBase = config.api;
         this.productID = parseInt(props.match.params.id, 10);
         this.state = {
             product: {}
@@ -16,14 +17,14 @@ export default class Product extends React.Component {
 
     componentDidMount() {
         var self = this;
-        axios.get(this.apiBase + 'product/' + this.productID).then((res) => {
+        axios.get(this.apiBase + '/product/' + this.productID).then((res) => {
             self.setState({product: res.data})
         }).catch((err) => {
             console.log(err);
         });
     }
 
-    render() {
+    render() {        
         return (
             <div className="product-page">
                 <Link to="/">Back</Link><br/>
@@ -33,6 +34,7 @@ export default class Product extends React.Component {
                 Cena:<h2>{this.state.product.price}</h2><br/>
                 Dodano:<h4>{this.state.product.created}</h4><br/>
                 Kategoria:<h4>{this.state.product.category}</h4><br/>
+                <div className="img-container">{this.state.product.image!==undefined ? (<img src="/static/img/{this.state.product.image}" width="300" height="300" />):(<p>no image</p>)}</div>
             </div>
         );
     }

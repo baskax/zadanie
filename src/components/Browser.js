@@ -4,12 +4,13 @@ import {Alert, Button} from 'react-bootstrap';
 import DataTable from './DataTable';
 import Modal from "./Modal";
 import queryString from "query-string";
+import config from "../utils/config";
 
 export default class Browser extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiBase = 'http://fbla.pl:8110/api/products';
+        this.apiBase = config.api + "/products";
         this.state = {
             data: {data: [], count: 0},
             searchText: '',
@@ -88,7 +89,7 @@ export default class Browser extends React.Component {
         if (self.state.page !== undefined) params.page = self.state.page;
         if (self.state.recs !== undefined) params.recs = self.state.recs;
         if (self.state.sort.field !== undefined) params.order = self.state.sort.field + '=' + self.state.sort.dir;
-        if (self.state.filters !== undefined) {
+        if (self.state.filters !== undefined && Object.keys(self.state.filters).length > 0) {
             var array = [];
             for (var prop in self.state.filters) {
                 if (self.state.filters[prop] !== '') array.push(prop + "=" + self.state.filters[prop]);

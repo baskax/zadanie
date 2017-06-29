@@ -72,9 +72,11 @@ export default class Parser {
                 type: 'product',
                 id: id
             }, function (err, response) {
+                if (response !== undefined) {                
                 if (response.found === true)
                 res.status(200).json(response._source);
                 else res.status(404).json("Nothing found");
+            }
             });
         } else {
             res.status(400).json("Bad request!");
