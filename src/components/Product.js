@@ -24,7 +24,8 @@ export default class Product extends React.Component {
         });
     }
 
-    render() {        
+    render() {       
+        let image = this.state.product.image!==undefined ? process.env.PUBLIC_URL+"/img/"+this.state.product.image : undefined; 
         return (
             <div className="product-page">
                 <Link to="/">Back</Link><br/>
@@ -34,7 +35,7 @@ export default class Product extends React.Component {
                 Cena:<h2>{this.state.product.price}</h2><br/>
                 Dodano:<h4>{this.state.product.created}</h4><br/>
                 Kategoria:<h4>{this.state.product.category}</h4><br/>
-                <div className="img-container">{this.state.product.image!==undefined ? (<img src="/static/img/{this.state.product.image}" width="300" height="300" />):(<p>no image</p>)}</div>
+                <div className="img-container">{image !== undefined ? (<img src={image} width="300" height="300" alt="product image"/>):(<p>no image</p>)}</div>
             </div>
         );
     }
