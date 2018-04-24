@@ -1,7 +1,6 @@
 {
   "mappings": {
     "product": { 
-      "_all":       { "enabled": true }, 
         "properties": {
           "category": { "type": "keyword" }, 
           "brand" : { "type":"keyword" },
@@ -17,7 +16,7 @@
               "comment" : { "type":"text" }
             }
           },
-          "image": { "type":"text", "include_in_all" : false },
+          "image": { "type":"text" },
           "more_info" : { "type":"object" }
         }
     }

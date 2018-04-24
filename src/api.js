@@ -25,6 +25,10 @@ app.get('/api/*',(req,res) => {
     parser.parse(req,res);
     });
 
+app.get('*', (req,res) => {
+    res.status(404);
+})
+
 //run the server
 app.listen(port, () => {
     console.log("Server listening on port " + port + "!");
